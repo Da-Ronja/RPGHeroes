@@ -1,6 +1,9 @@
 package org.hero.rpg.heros;
 
-import org.hero.rpg.equipment.*;
+import org.hero.rpg.equipment.ArmorType;
+import org.hero.rpg.equipment.Slot;
+import org.hero.rpg.equipment.Weapon;
+import org.hero.rpg.equipment.WeaponType;
 
 import java.util.EnumSet;
 
@@ -39,6 +42,4 @@ public class Warrior extends Hero {
 
         return baseDamage * (1.0 + damagingAttribute / 100.0);
     }
-
-
 }
