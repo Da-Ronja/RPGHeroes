@@ -112,6 +112,7 @@ class WarriorTest {
         assertEquals(expectedAttributes, actualAttributes);
     }
 
+    // When Weapon is created, it needs to have the correct name, required level, slot, weapon type, and damage
     @Test
     void testCreateWeaponNameShouldBeCommonAxe() {
         String expectedName = "Common Axe";
@@ -152,6 +153,7 @@ class WarriorTest {
         assertEquals(expectedWeaponDamage, actualWeaponDamage);
     }
 
+    // When Armor is created, it needs to have the correct name, required level, slot, armor type, and armor attributes
     @Test
     void testCreateArmorNameShouldBeCommonPlateChest() {
         String expectedName = "Common Plate Chest";
@@ -291,6 +293,7 @@ class WarriorTest {
 
         assertEquals(expectedAttributes, actualAttributes);
     }
+
     // With a replaced piece of armor (equip armor, then equip new armor in the same slot)
     @Test
     void testCalculateTotalAttributesReplacedPieceOfArmor() throws InvalidArmorException {
@@ -302,6 +305,69 @@ class WarriorTest {
         HeroAttribute actual = warrior.calculateTotalAttributes();
 
         assertEquals(expected, actual);
+    }
+
+    // Hero damage should be calculated properly
+    // No weapon equipped
+    @Test
+    void testCalculateDamageNoWeaponEquipped() {
+        double expectedDamage = 1.05;
+        double actualDamage = warrior.calculateDamage();
+
+        assertEquals(expectedDamage, actualDamage);
+    }
+    // Weapon equipped
+    @Test
+    void testCalculateDamageWeaponEquipped() throws InvalidWeaponException {
+        warrior.equip(weapon);
+
+        double expectedDamage = 2.1;
+        double actualDamage = warrior.calculateDamage();
+
+        assertEquals(expectedDamage, actualDamage);
+    }
+    // Replaced weapon equipped (equip a weapon then equip a new weapon)
+    @Test
+    void testCalculateDamageReplacedWeaponEquipped() throws InvalidWeaponException {
+        Weapon weaponReplace = new Weapon("Uncommon Hammer", 1, WeaponType.HAMMER, 3);
+        warrior.equip(weapon);
+        warrior.equip(weaponReplace);
+
+        double expectedDamage = 3.15;
+        double actualDamage = warrior.calculateDamage();
+
+        assertEquals(expectedDamage, actualDamage);
+    }
+    // Weapon and armor equipped
+    @Test
+    void testCalculateDamageWeaponAndArmorEquipped() throws InvalidWeaponException, InvalidArmorException {
+        warrior.equip(weapon);
+        warrior.equip(armor);
+
+        double expectedDamage = 2.12;
+        double actualDamage = warrior.calculateDamage();
+
+        assertEquals(expectedDamage, actualDamage);
+    }
+
+    @Test
+    void testDisplay() throws InvalidWeaponException, InvalidArmorException {
+        warrior.equip(weapon);
+        warrior.equip(armor);
+
+        String expectedOutput = """
+                Name: Warrior Head
+                Class: Warrior
+                Level: 1
+                Total strength: 6
+                Total dexterity: 2
+                Total intelligence: 1
+                Damage: 2.12
+                """;
+
+        String actualOutput =  warrior.display();
+
+        assertEquals(expectedOutput,actualOutput);
     }
 
 }
