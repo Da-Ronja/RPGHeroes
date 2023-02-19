@@ -96,12 +96,38 @@ class MageTest {
     }
 
     @Test // Same
-    public void testAttributesIncreasedByCorrectAmount() {
+    public void testLevelIncreasedByFiveWithLeveUp() {
+        int expectedLevel = 5;
+        mage.levelUp();
+        mage.levelUp();
+        mage.levelUp();
+        mage.levelUp();
+        int actualLevel = mage.getLevel();
+
+        assertEquals(expectedLevel, actualLevel);
+    }
+
+    @Test // Same
+    public void testAttributesIncreasedByCorrectAmountWhenLeveUpByOne() {
         HeroAttribute expectedAttributes = new HeroAttribute(2, 2, 13);
         mage.levelUp();
         HeroAttribute actualAttributes = mage.calculateTotalAttributes();
 
         assertEquals(expectedAttributes, actualAttributes);
     }
+
+    @Test // Same
+    public void testAttributesIncreasedByCorrectAmountWhenLeveUpByFour() {
+        HeroAttribute expectedAttributes = new HeroAttribute(5, 5, 28);
+        mage.levelUp();
+        mage.levelUp();
+        mage.levelUp();
+        mage.levelUp();
+        HeroAttribute actualAttributes = mage.calculateTotalAttributes();
+
+        assertEquals(expectedAttributes, actualAttributes);
+    }
+
+
 
 }
