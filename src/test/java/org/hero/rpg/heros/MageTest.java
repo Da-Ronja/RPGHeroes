@@ -1,5 +1,6 @@
 package org.hero.rpg.heros;
 
+import org.hero.rpg.equipment.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,17 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class MageTest {
 
     private Hero mage;
+    private Weapon weapon;
+    private Armor armor;
 
     @BeforeEach // Same
     public void setUp() {
         mage = new Mage("TinTin");
-    }
-
-    @Test // Same but maybe not done Should it test items Null?
-    public void testInitializationNewMage() {
-        assertEquals("TinTin", mage.getName());
-        assertEquals(1, mage.getLevel());
-        assertEquals(new HeroAttribute(1, 1, 8), mage.totalAttributes());
+        weapon = new Weapon("Common Wand", 1, WeaponType.WAND, 2);
+        armor = new Armor("Common Cloth Chest", 1, Slot.BODY, ArmorType.CLOTH, new HeroAttribute(1,0, 0));
     }
 
     @Test
@@ -32,7 +30,6 @@ class MageTest {
     }
 
     @Test
-        // Same
     void createMageNameShouldNotBeFluffy() {
         String expectedName = "Fluffy";
         String actualName = mage.getName();
@@ -40,7 +37,7 @@ class MageTest {
         assertNotEquals(expectedName, actualName);
     }
 
-    @Test // Same
+    @Test
     public void testStartingLevelShouldBeOne() {
         int expectedLevel = 1;
         int actualLevel = mage.getLevel();
@@ -48,7 +45,7 @@ class MageTest {
         assertEquals(expectedLevel, actualLevel);
     }
 
-    @Test // Same
+    @Test
     public void testStartingLevelShouldNotBeFive() {
         int expectedLevel = 5;
         int actualLevel = mage.getLevel();
@@ -73,20 +70,6 @@ class MageTest {
     }
 
     @Test // Same
-    public void testLevelUp() {
-        int expectedLevel = 2;
-        HeroAttribute expectedAttributes = new HeroAttribute(2, 2, 13);
-
-        mage.levelUp();
-
-        int actualLevel = mage.getLevel();
-        HeroAttribute actualAttributes = mage.totalAttributes();
-
-        assertEquals(expectedLevel, actualLevel);
-        assertEquals(expectedAttributes, actualAttributes);
-    }
-
-    @Test // Same
     public void testLevelIncreasedByOneWithLeveUp() {
         int expectedLevel = 2;
         mage.levelUp();
@@ -95,13 +78,15 @@ class MageTest {
         assertEquals(expectedLevel, actualLevel);
     }
 
-    @Test // Same
+    @Test
     public void testLevelIncreasedByFiveWithLeveUp() {
+        // level setup
         int expectedLevel = 5;
-        mage.levelUp();
-        mage.levelUp();
-        mage.levelUp();
-        mage.levelUp();
+
+        for (int i = 1; i < expectedLevel; i++) {
+            mage.levelUp();
+        }
+
         int actualLevel = mage.getLevel();
 
         assertEquals(expectedLevel, actualLevel);
@@ -116,7 +101,7 @@ class MageTest {
         assertEquals(expectedAttributes, actualAttributes);
     }
 
-    @Test // Same
+    @Test
     public void testAttributesIncreasedByCorrectAmountWhenLeveUpByFour() {
         HeroAttribute expectedAttributes = new HeroAttribute(5, 5, 28);
         mage.levelUp();
@@ -128,6 +113,86 @@ class MageTest {
         assertEquals(expectedAttributes, actualAttributes);
     }
 
+    // When Weapon is created, it needs to have the correct name, required level, slot, weapon type, and damage
+    @Test
+    void testCreateWeaponNameShouldBeCommonAxe() {
+        String expectedName = "Common Wand";
+        String actualName = weapon.getName();
 
+        assertEquals(expectedName, actualName);
+    }
+
+    @Test
+    void testCreateWeaponRequiredLevelShouldBe1() {
+        int expectedRequiredLevel = 1;
+        int actualRequiredLevel = weapon.getRequiredLevel();
+
+        assertEquals(expectedRequiredLevel, actualRequiredLevel);
+    }
+
+    @Test
+    void testCreateWeaponSlotShouldBeWeapon() {
+        Slot expectedSlot = Slot.WEAPON;
+        Slot actualSlot = weapon.getSlot();
+
+        assertEquals(expectedSlot, actualSlot);
+    }
+
+    @Test
+    void testCreateWeaponTypeShouldBeAxe() {
+        WeaponType expectedType = WeaponType.WAND;
+        WeaponType actualType = weapon.getWeaponType();
+
+        assertEquals(expectedType, actualType);
+    }
+
+    @Test
+    void testCreateWeaponDamageShouldBe2() {
+        int expectedWeaponDamage = 2;
+        int actualWeaponDamage = weapon.getWeaponDamage();
+
+        assertEquals(expectedWeaponDamage, actualWeaponDamage);
+    }
+
+    // When Armor is created, it needs to have the correct name, required level, slot, armor type, and armor attributes
+    @Test
+    void testCreateArmorNameShouldBeCommonPlateChest() {
+        String expectedName = "Common Cloth Chest";
+        String actualName = armor.getName();
+
+        assertEquals(expectedName, actualName);
+    }
+
+    @Test
+    void testCreateArmorRequiredLevelShouldBe1() {
+        int expectedRequiredLevel = 1;
+        int actualRequiredLevel = armor.getRequiredLevel();
+
+        assertEquals(expectedRequiredLevel, actualRequiredLevel);
+    }
+
+    @Test
+    void testCreateArmorSlotShouldBeBody() {
+        Slot expectedSlot = Slot.BODY;
+        Slot actualSlot = armor.getSlot();
+
+        assertEquals(expectedSlot, actualSlot);
+    }
+
+    @Test
+    void testCreateArmorTypeShouldBePlate() {
+        ArmorType expectedType = ArmorType.CLOTH;
+        ArmorType actualType = armor.getArmorType();
+
+        assertEquals(expectedType, actualType);
+    }
+
+    @Test
+    void testCreateArmorAttributeShouldBePlate() {
+        HeroAttribute expectedAttribute = new HeroAttribute(1,0, 0);
+        HeroAttribute actualAttribute = armor.getArmorAttribute();
+
+        assertEquals(expectedAttribute, actualAttribute);
+    }
 
 }
