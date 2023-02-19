@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class WarriorTest {
+class RangerTest {
 
-    private Hero warrior;
+    private Hero ranger;
     private Weapon weapon;
     private Weapon weaponInvalid;
     private Armor armor;
@@ -18,15 +18,17 @@ class WarriorTest {
 
     @BeforeEach
     public void setUp() {
-        warrior = new Warrior("Warrior Head");
-        weapon = new Weapon("Common Axe", 1, WeaponType.AXE, 2);
-        armor = new Armor("Common Plate Chest", 1, Slot.BODY, ArmorType.PLATE, new HeroAttribute(1, 0, 0));
+        ranger = new Ranger("Ranger Tom");
+        weapon = new Weapon("Common Bow", 1, WeaponType.BOW, 2);
+        armor = new Armor("Common Leather Chest",
+                1, Slot.BODY,
+                ArmorType.LEATHER, new HeroAttribute(1, 0, 0));
     }
 
     @Test
-    void createMageNameShouldBeWarriorHead() {
-        String expectedName = "Warrior Head";
-        String actualName = warrior.getName();
+    void createMageNameShouldBeRangerTom() {
+        String expectedName = "Ranger Tom";
+        String actualName = ranger.getName();
 
         assertEquals(expectedName, actualName);
     }
@@ -34,7 +36,7 @@ class WarriorTest {
     @Test
     void createMageNameShouldNotBeFluffy() {
         String expectedName = "Fluffy";
-        String actualName = warrior.getName();
+        String actualName = ranger.getName();
 
         assertNotEquals(expectedName, actualName);
     }
@@ -42,7 +44,7 @@ class WarriorTest {
     @Test
     public void testStartingLevelShouldBeOne() {
         int expectedLevel = 1;
-        int actualLevel = warrior.getLevel();
+        int actualLevel = ranger.getLevel();
 
         assertEquals(expectedLevel, actualLevel);
     }
@@ -50,15 +52,15 @@ class WarriorTest {
     @Test
     public void testStartingLevelShouldNotBeFive() {
         int expectedLevel = 5;
-        int actualLevel = warrior.getLevel();
+        int actualLevel = ranger.getLevel();
 
         assertNotEquals(expectedLevel, actualLevel);
     }
 
     @Test
-    public void testStartingLevelAttributesShouldBe521() {
-        HeroAttribute expectedAttributes = new HeroAttribute(5, 2, 1);
-        HeroAttribute actualAttributes = warrior.getStartingLevelAttributes();
+    public void testStartingLevelAttributesShouldBe171() {
+        HeroAttribute expectedAttributes = new HeroAttribute(1, 7, 1);
+        HeroAttribute actualAttributes = ranger.getStartingLevelAttributes();
 
         assertEquals(expectedAttributes, actualAttributes);
     }
@@ -66,7 +68,7 @@ class WarriorTest {
     @Test
     public void testStartingLevelAttributesShouldNotBe123() {
         HeroAttribute expectedAttributes = new HeroAttribute(1, 2, 3);
-        HeroAttribute actualAttributes = warrior.getStartingLevelAttributes();
+        HeroAttribute actualAttributes = ranger.getStartingLevelAttributes();
 
         assertNotEquals(expectedAttributes, actualAttributes);
     }
@@ -74,8 +76,8 @@ class WarriorTest {
     @Test
     public void testLevelIncreasedByOneWithLeveUp() {
         int expectedLevel = 2;
-        warrior.levelUp();
-        int actualLevel = warrior.getLevel();
+        ranger.levelUp();
+        int actualLevel = ranger.getLevel();
 
         assertEquals(expectedLevel, actualLevel);
     }
@@ -84,37 +86,37 @@ class WarriorTest {
     public void testLevelIncreasedByFiveWithLeveUp() {
         int expectedLevel = 5;
         for (int i = 1; i < expectedLevel; i++) {
-            warrior.levelUp();
+            ranger.levelUp();
         }
-        int actualLevel = warrior.getLevel();
+        int actualLevel = ranger.getLevel();
 
         assertEquals(expectedLevel, actualLevel);
     }
 
     @Test
     public void testAttributesIncreasedByCorrectAmountWhenLeveUpByOne() {
-        HeroAttribute expectedAttributes = new HeroAttribute(8, 4, 2);
-        warrior.levelUp();
-        HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
+        HeroAttribute expectedAttributes = new HeroAttribute(2, 12, 2);
+        ranger.levelUp();
+        HeroAttribute actualAttributes = ranger.calculateTotalAttributes();
 
         assertEquals(expectedAttributes, actualAttributes);
     }
 
     @Test
     public void testAttributesIncreasedByCorrectAmountWhenLeveUpByFive() {
-        HeroAttribute expectedAttributes = new HeroAttribute(17, 10, 5);
+        HeroAttribute expectedAttributes = new HeroAttribute(5, 27, 5);
         for (int i = 1; i < 5; i++) {
-            warrior.levelUp();
+            ranger.levelUp();
         }
-        HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
+        HeroAttribute actualAttributes = ranger.calculateTotalAttributes();
 
         assertEquals(expectedAttributes, actualAttributes);
     }
 
     // When Weapon is created, it needs to have the correct name, required level, slot, weapon type, and damage
     @Test
-    void testCreateWeaponNameShouldBeCommonAxe() {
-        String expectedName = "Common Axe";
+    void testCreateWeaponNameShouldBeCommonBow() {
+        String expectedName = "Common Bow";
         String actualName = weapon.getName();
 
         assertEquals(expectedName, actualName);
@@ -137,8 +139,8 @@ class WarriorTest {
     }
 
     @Test
-    void testCreateWeaponTypeShouldBeAxe() {
-        WeaponType expectedType = WeaponType.AXE;
+    void testCreateWeaponTypeShouldBeBow() {
+        WeaponType expectedType = WeaponType.BOW;
         WeaponType actualType = weapon.getWeaponType();
 
         assertEquals(expectedType, actualType);
@@ -152,10 +154,11 @@ class WarriorTest {
         assertEquals(expectedWeaponDamage, actualWeaponDamage);
     }
 
+
     // When Armor is created, it needs to have the correct name, required level, slot, armor type, and armor attributes
     @Test
-    void testCreateArmorNameShouldBeCommonPlateChest() {
-        String expectedName = "Common Plate Chest";
+    void testCreateArmorNameShouldBeCommonLeatherChest() {
+        String expectedName = "Common Leather Chest";
         String actualName = armor.getName();
 
         assertEquals(expectedName, actualName);
@@ -178,15 +181,15 @@ class WarriorTest {
     }
 
     @Test
-    void testCreateArmorTypeShouldBePlate() {
-        ArmorType expectedType = ArmorType.PLATE;
+    void testCreateArmorTypeShouldBeLeather() {
+        ArmorType expectedType = ArmorType.LEATHER;
         ArmorType actualType = armor.getArmorType();
 
         assertEquals(expectedType, actualType);
     }
 
     @Test
-    void testCreateArmorAttributeShouldBePlate() {
+    void testCreateArmorAttributeShouldBeLeather() {
         HeroAttribute expectedAttribute = new HeroAttribute(1, 0, 0);
         HeroAttribute actualAttribute = armor.getArmorAttribute();
 
@@ -197,16 +200,16 @@ class WarriorTest {
     @Test
     void testEquipWeaponDoesNotThrowsExceptions() {
 
-        assertDoesNotThrow(() -> warrior.equip(weapon));
+        assertDoesNotThrow(() -> ranger.equip(weapon));
 
-        assertEquals(weapon.getRequiredLevel(), warrior.getLevel());
+        assertEquals(weapon.getRequiredLevel(), ranger.getLevel());
     }
 
     @Test
     void testEquipWeaponRequiredLevelThrowsExceptions() {
-        weaponInvalid = new Weapon("Common Axe", 3, WeaponType.AXE, 2);
+        weaponInvalid = new Weapon("Common Bow", 3, WeaponType.BOW, 2);
 
-        Exception exception = assertThrows(InvalidWeaponException.class, () -> warrior.equip(weaponInvalid));
+        Exception exception = assertThrows(InvalidWeaponException.class, () -> ranger.equip(weaponInvalid));
 
         String expectedMessage = "This hero is not high enough level to equip " + weaponInvalid.getWeaponType();
         String actualMessage = exception.getMessage();
@@ -216,9 +219,9 @@ class WarriorTest {
 
     @Test
     void testEquipWeaponTypeThrowsExceptions() {
-        weaponInvalid = new Weapon("Common Axe", 1, WeaponType.WAND, 2);
+        weaponInvalid = new Weapon("Common Wand", 1, WeaponType.WAND, 2);
 
-        Exception exception = assertThrows(InvalidWeaponException.class, () -> warrior.equip(weaponInvalid));
+        Exception exception = assertThrows(InvalidWeaponException.class, () -> ranger.equip(weaponInvalid));
 
         String expectedMessage = "This hero cannot equip weapons of type " + weaponInvalid.getWeaponType();
         String actualMessage = exception.getMessage();
@@ -230,16 +233,16 @@ class WarriorTest {
     @Test
     void testEquipArmorDoesNotThrowsExceptions() {
 
-        assertDoesNotThrow(() -> warrior.equip(armor));
+        assertDoesNotThrow(() -> ranger.equip(armor));
 
-        assertEquals(armor.getRequiredLevel(), warrior.getLevel());
+        assertEquals(armor.getRequiredLevel(), ranger.getLevel());
     }
 
     @Test
     void testEquipArmorTypeThrowsExceptions() {
-        armorInvalid = new Armor("Common Plate Chest", 1, Slot.BODY, ArmorType.CLOTH, new HeroAttribute(1, 0, 0));
+        armorInvalid = new Armor("Common Cloth Chest", 1, Slot.BODY, ArmorType.CLOTH, new HeroAttribute(1, 0, 0));
 
-        Exception exception = assertThrows(InvalidArmorException.class, () -> warrior.equip(armorInvalid));
+        Exception exception = assertThrows(InvalidArmorException.class, () -> ranger.equip(armorInvalid));
 
         String expectedMessage = "This hero cannot equip armor of type " + armorInvalid.getArmorType();
         String actualMessage = exception.getMessage();
@@ -249,9 +252,9 @@ class WarriorTest {
 
     @Test
     void testEquipArmorRequiredLevelThrowsExceptions() {
-        armorInvalid = new Armor("Common Plate Chest", 2, Slot.BODY, ArmorType.PLATE, new HeroAttribute(1, 0, 0));
+        armorInvalid = new Armor("Common Leather Chest", 2, Slot.BODY, ArmorType.LEATHER, new HeroAttribute(1, 0, 0));
 
-        Exception exception = assertThrows(InvalidArmorException.class, () -> warrior.equip(armorInvalid));
+        Exception exception = assertThrows(InvalidArmorException.class, () -> ranger.equip(armorInvalid));
 
         String expectedMessage = "This hero is not high enough level to equip this armor.";
         String actualMessage = exception.getMessage();
@@ -263,8 +266,8 @@ class WarriorTest {
     // With no equipment
     @Test
     void testCalculateTotalAttributesNoEquipment() {
-        HeroAttribute expectedAttributes = new HeroAttribute(5, 2, 1);
-        HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
+        HeroAttribute expectedAttributes = new HeroAttribute(1, 7, 1);
+        HeroAttribute actualAttributes = ranger.calculateTotalAttributes();
 
         assertEquals(expectedAttributes, actualAttributes);
     }
@@ -272,9 +275,9 @@ class WarriorTest {
     // With one piece of armor
     @Test
     void testCalculateTotalAttributesOnePieceOfArmor() throws InvalidArmorException {
-        warrior.equip(armor);
-        HeroAttribute expectedAttributes = new HeroAttribute(6, 2, 1);
-        HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
+        ranger.equip(armor);
+        HeroAttribute expectedAttributes = new HeroAttribute(2, 7, 1);
+        HeroAttribute actualAttributes = ranger.calculateTotalAttributes();
 
         assertEquals(expectedAttributes, actualAttributes);
     }
@@ -282,13 +285,13 @@ class WarriorTest {
     // With two pieces of armor
     @Test
     void testCalculateTotalAttributesTwoPiecesOfArmor() throws InvalidArmorException {
-        Armor armor2 = new Armor("Common Plate Legs", 1, Slot.LEGS, ArmorType.PLATE, new HeroAttribute(1, 0, 1));
+        Armor armor2 = new Armor("Rar Leather Legs", 1, Slot.LEGS, ArmorType.LEATHER, new HeroAttribute(1, 0, 1));
 
-        warrior.equip(armor);
-        warrior.equip(armor2);
+        ranger.equip(armor);
+        ranger.equip(armor2);
 
-        HeroAttribute expectedAttributes = new HeroAttribute(7, 2, 2);
-        HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
+        HeroAttribute expectedAttributes = new HeroAttribute(3, 7, 2);
+        HeroAttribute actualAttributes = ranger.calculateTotalAttributes();
 
         assertEquals(expectedAttributes, actualAttributes);
     }
@@ -296,12 +299,12 @@ class WarriorTest {
     // With a replaced piece of armor (equip armor, then equip new armor in the same slot)
     @Test
     void testCalculateTotalAttributesReplacedPieceOfArmor() throws InvalidArmorException {
-        Armor armor2 = new Armor("Uncommon Plate Chest", 1, Slot.BODY, ArmorType.PLATE, new HeroAttribute(1, 0, 1));
-        warrior.equip(armor);
-        warrior.equip(armor2);
+        Armor armor2 = new Armor("Uncommon Mail Chest", 1, Slot.BODY, ArmorType.MAIL, new HeroAttribute(1, 0, 1));
+        ranger.equip(armor);
+        ranger.equip(armor2);
 
-        HeroAttribute expected = new HeroAttribute(6, 2, 2);
-        HeroAttribute actual = warrior.calculateTotalAttributes();
+        HeroAttribute expected = new HeroAttribute(2, 7, 2);
+        HeroAttribute actual = ranger.calculateTotalAttributes();
 
         assertEquals(expected, actual);
     }
@@ -310,8 +313,8 @@ class WarriorTest {
     // No weapon equipped
     @Test
     void testCalculateDamageNoWeaponEquipped() {
-        double expectedDamage = 1.05;
-        double actualDamage = warrior.calculateDamage();
+        double expectedDamage = 1.07;
+        double actualDamage = ranger.calculateDamage();
 
         assertEquals(expectedDamage, actualDamage);
     }
@@ -319,10 +322,10 @@ class WarriorTest {
     // Weapon equipped
     @Test
     void testCalculateDamageWeaponEquipped() throws InvalidWeaponException {
-        warrior.equip(weapon);
+        ranger.equip(weapon);
 
-        double expectedDamage = 2.1;
-        double actualDamage = warrior.calculateDamage();
+        double expectedDamage = 2.14;
+        double actualDamage = ranger.calculateDamage();
 
         assertEquals(expectedDamage, actualDamage);
     }
@@ -330,12 +333,12 @@ class WarriorTest {
     // Replaced weapon equipped (equip a weapon then equip a new weapon)
     @Test
     void testCalculateDamageReplacedWeaponEquipped() throws InvalidWeaponException {
-        Weapon weaponReplace = new Weapon("Uncommon Hammer", 1, WeaponType.HAMMER, 3);
-        warrior.equip(weapon);
-        warrior.equip(weaponReplace);
+        Weapon weaponReplace = new Weapon("Rar Bow", 1, WeaponType.BOW, 3);
+        ranger.equip(weapon);
+        ranger.equip(weaponReplace);
 
-        double expectedDamage = 3.15;
-        double actualDamage = warrior.calculateDamage();
+        double expectedDamage = 3.21;
+        double actualDamage = ranger.calculateDamage();
 
         assertEquals(expectedDamage, actualDamage);
     }
@@ -343,31 +346,31 @@ class WarriorTest {
     // Weapon and armor equipped
     @Test
     void testCalculateDamageWeaponAndArmorEquipped() throws InvalidWeaponException, InvalidArmorException {
-        warrior.equip(weapon);
-        warrior.equip(armor);
+        ranger.equip(weapon);
+        ranger.equip(armor);
 
-        double expectedDamage = 2.12;
-        double actualDamage = warrior.calculateDamage();
+        double expectedDamage = 2.14;
+        double actualDamage = ranger.calculateDamage();
 
         assertEquals(expectedDamage, actualDamage);
     }
 
     @Test
     void testDisplay() throws InvalidWeaponException, InvalidArmorException {
-        warrior.equip(weapon);
-        warrior.equip(armor);
+        ranger.equip(weapon);
+        ranger.equip(armor);
 
         String expectedOutput = """
-                Name: Warrior Head
-                Class: Warrior
+                Name: Ranger Tom
+                Class: Ranger
                 Level: 1
-                Total strength: 6
-                Total dexterity: 2
+                Total strength: 2
+                Total dexterity: 7
                 Total intelligence: 1
-                Damage: 2.12
+                Damage: 2.14
                 """;
 
-        String actualOutput = warrior.display();
+        String actualOutput = ranger.display();
 
         assertEquals(expectedOutput, actualOutput);
     }

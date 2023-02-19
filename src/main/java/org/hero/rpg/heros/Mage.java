@@ -1,6 +1,9 @@
 package org.hero.rpg.heros;
 
-import org.hero.rpg.equipment.*;
+import org.hero.rpg.equipment.ArmorType;
+import org.hero.rpg.equipment.Slot;
+import org.hero.rpg.equipment.Weapon;
+import org.hero.rpg.equipment.WeaponType;
 
 import java.util.EnumSet;
 
@@ -21,7 +24,7 @@ public class Mage extends Hero {
 
     @Override
     public double calculateDamage() {
-        double baseDamage = 0.0;
+        double baseDamage;
 
         // Get the equipped weapon, if any
         Weapon weapon = (Weapon) equipment.get(Slot.WEAPON);

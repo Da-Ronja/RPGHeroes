@@ -62,22 +62,6 @@ public abstract class Hero {
         this.equipment.put(armor.getSlot(), armor);
     }
 
-    public HeroAttribute totalAttributes() {
-        return calculateTotalAttributes();
-    }
-
-    @Override
-    public String toString() {
-        return "Hero: " + this.getClass().getSimpleName() + "{" +
-                "name= " + name + '\'' +
-                ", level= " + level +
-                ", levelAttributes=" + levelAttributes +
-                ", equipment=" + equipment +
-                ", validWeaponTypes=" + validWeaponTypes +
-                ", validArmorTypes=" + validArmorTypes +
-                '}';
-    }
-
     public String display() {
         HeroAttribute totalAttributes = calculateTotalAttributes();
         double totalDamage = calculateDamage();

@@ -1,13 +1,16 @@
 package org.hero.rpg.heros;
 
-import org.hero.rpg.equipment.*;
+import org.hero.rpg.equipment.ArmorType;
+import org.hero.rpg.equipment.Slot;
+import org.hero.rpg.equipment.Weapon;
+import org.hero.rpg.equipment.WeaponType;
 
 import java.util.EnumSet;
 
 public class Ranger extends Hero {
 
     public Ranger(String name) {
-        super(name, EnumSet.of(WeaponType.BOW), EnumSet.of(ArmorType.LEATHER,ArmorType.MAIL));
+        super(name, EnumSet.of(WeaponType.BOW), EnumSet.of(ArmorType.LEATHER, ArmorType.MAIL));
     }
 
     @Override
@@ -22,7 +25,7 @@ public class Ranger extends Hero {
 
     @Override
     public double calculateDamage() {
-        double baseDamage = 0.0;
+        double baseDamage;
 
         // Get the equipped weapon, if any
         Weapon weapon = (Weapon) equipment.get(Slot.WEAPON);
@@ -39,5 +42,4 @@ public class Ranger extends Hero {
 
         return baseDamage * (1.0 + damagingAttribute / 100.0);
     }
-
 }

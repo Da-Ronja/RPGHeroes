@@ -19,6 +19,10 @@ public abstract class Item {
         return slot;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -27,27 +31,4 @@ public abstract class Item {
                 ", slot=" + slot +
                 '}';
     }
-
-    // TODO Remove
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setRequiredLevel(int requiredLevel) {
-        this.requiredLevel = requiredLevel;
-    }
-
-    public void setSlot(Slot slot) {
-        this.slot = slot;
-    }
-
-    public Object getDamageMultiplier() {
-        return null;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-
 }
