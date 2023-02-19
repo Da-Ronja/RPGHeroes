@@ -245,6 +245,7 @@ class WarriorTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
     @Test
     void testEquipArmorRequiredLevelThrowsExceptions() {
         armorInvalid = new Armor("Common Plate Chest", 2, Slot.BODY, ArmorType.PLATE, new HeroAttribute(1, 0, 0));
@@ -257,5 +258,50 @@ class WarriorTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    // Total attributes should be calculated correctly
+    // With no equipment
+    @Test
+    void testCalculateTotalAttributesNoEquipment() {
+        HeroAttribute expectedAttributes = new HeroAttribute(5, 2, 1);
+        HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
+
+        assertEquals(expectedAttributes, actualAttributes);
+    }
+
+    // With one piece of armor
+    @Test
+    void testCalculateTotalAttributesOnePieceOfArmor() throws InvalidArmorException {
+        warrior.equip(armor);
+        HeroAttribute expectedAttributes = new HeroAttribute(6, 2, 1);
+        HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
+
+        assertEquals(expectedAttributes, actualAttributes);
+    }
+
+    // With two pieces of armor
+    @Test
+    void testCalculateTotalAttributesTwoPiecesOfArmor() throws InvalidArmorException {
+        Armor armor2 = new Armor("Common Plate Legs", 1, Slot.LEGS, ArmorType.PLATE, new HeroAttribute(1, 0, 1));
+
+        warrior.equip(armor);
+        warrior.equip(armor2);
+
+        HeroAttribute expectedAttributes = new HeroAttribute(7, 2, 2);
+        HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
+
+        assertEquals(expectedAttributes, actualAttributes);
+    }
+    // With a replaced piece of armor (equip armor, then equip new armor in the same slot)
+    @Test
+    void testCalculateTotalAttributesReplacedPieceOfArmor() throws InvalidArmorException {
+        Armor armor2 = new Armor("Uncommon Plate Chest", 1, Slot.BODY, ArmorType.PLATE, new HeroAttribute(1, 0, 1));
+        warrior.equip(armor);
+        warrior.equip(armor2);
+
+        HeroAttribute expected = new HeroAttribute(6, 2, 2);
+        HeroAttribute actual = warrior.calculateTotalAttributes();
+
+        assertEquals(expected, actual);
+    }
 
 }
