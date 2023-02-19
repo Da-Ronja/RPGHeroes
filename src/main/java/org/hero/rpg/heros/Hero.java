@@ -9,13 +9,12 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class Hero {
-
-    private final String name;
-    private int level;
-    protected HeroAttribute levelAttributes;
     protected final Map<Slot, Item> equipment;
+    private final String name;
     private final Set<WeaponType> validWeaponTypes;
     private final Set<ArmorType> validArmorTypes;
+    protected HeroAttribute levelAttributes;
+    private int level;
 
     public Hero(String name, Set<WeaponType> validWeaponTypes, Set<ArmorType> validArmorTypes) {
         this.name = name;
@@ -60,9 +59,7 @@ public abstract class Hero {
             throw new InvalidArmorException("This hero is not high enough level to equip this armor.");
         }
 
-        // Replace the current armor in the corresponding equipment slot with the new armor
         this.equipment.put(armor.getSlot(), armor);
-        this.levelAttributes = this.levelAttributes.plus(armor.getArmorAttribute());
     }
 
     public HeroAttribute totalAttributes() {
@@ -71,7 +68,7 @@ public abstract class Hero {
 
     @Override
     public String toString() {
-        return "Hero: " + this.getClass().getSimpleName() +"{" +
+        return "Hero: " + this.getClass().getSimpleName() + "{" +
                 "name= " + name + '\'' +
                 ", level= " + level +
                 ", levelAttributes=" + levelAttributes +
@@ -86,26 +83,26 @@ public abstract class Hero {
         double totalDamage = calculateDamage();
         String className = this.getClass().getSimpleName();
 
-        return  "Name: " + this.name + "\n" +
+        return "Name: " + this.name + "\n" +
                 "Class: " + className + "\n" +
                 "Level: " + this.level + "\n" +
                 "Total strength: " + totalAttributes.getStrength() + "\n" +
                 "Total dexterity: " + totalAttributes.getDexterity() + "\n" +
                 "Total intelligence: " + totalAttributes.getIntelligence() + "\n" +
                 "Damage: " + totalDamage + "\n";
-
     }
 
-    // abstract methods to be implemented by each subclass
     protected abstract HeroAttribute getStartingLevelAttributes();
 
     protected abstract HeroAttribute getLevelAttributeGain();
+
     protected abstract double calculateDamage();
 
     public HeroAttribute calculateTotalAttributes() {
         HeroAttribute total = new HeroAttribute(levelAttributes.getStrength(),
                 levelAttributes.getDexterity(),
-                levelAttributes.getIntelligence());
+                levelAttributes.getIntelligence()
+        );
 
         for (Item item : equipment.values()) {
             if (item instanceof Armor) {
@@ -116,7 +113,6 @@ public abstract class Hero {
         return total;
     }
 
-    // private methods
     private Map<Slot, Item> initializeEquipment() {
         Map<Slot, Item> equipment = new HashMap<>();
         equipment.put(Slot.WEAPON, null);

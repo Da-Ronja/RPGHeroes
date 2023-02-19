@@ -1,6 +1,9 @@
 package org.hero.rpg.heros;
 
-import org.hero.rpg.equipment.*;
+import org.hero.rpg.equipment.ArmorType;
+import org.hero.rpg.equipment.Slot;
+import org.hero.rpg.equipment.Weapon;
+import org.hero.rpg.equipment.WeaponType;
 
 import java.util.EnumSet;
 
@@ -22,7 +25,7 @@ public class Warrior extends Hero {
 
     @Override
     public double calculateDamage() {
-        double baseDamage = 0.0;
+        double baseDamage;
 
         // Get the equipped weapon, if any
         Weapon weapon = (Weapon) equipment.get(Slot.WEAPON);
@@ -37,8 +40,7 @@ public class Warrior extends Hero {
         // Calculate the damaging attribute based on hero class
         double damagingAttribute = calculateTotalAttributes().getStrength();
 
-        return baseDamage * (1.0 + damagingAttribute / 100.0);
+        double damage = baseDamage * (1.0 + damagingAttribute / 100.0);
+        return Math.floor(damage * 100) / 100; // Limit to two decimal places
     }
-
-
 }
