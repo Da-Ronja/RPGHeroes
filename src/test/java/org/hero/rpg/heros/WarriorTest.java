@@ -1,6 +1,8 @@
 package org.hero.rpg.heros;
 
 import org.hero.rpg.equipment.*;
+import org.hero.rpg.exception.InvalidArmorException;
+import org.hero.rpg.exception.InvalidWeaponException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,13 +12,15 @@ class WarriorTest {
 
     private Hero warrior;
     private Weapon weapon;
+    private Weapon weaponInvalid;
     private Armor armor;
+    private Armor armorInvalid;
 
     @BeforeEach
     public void setUp() {
         warrior = new Warrior("Warrior Head");
         weapon = new Weapon("Common Axe", 1, WeaponType.AXE, 2);
-        armor = new Armor("Common Plate Chest", 1, Slot.BODY, ArmorType.PLATE,new HeroAttribute(1,0, 0));
+        armor = new Armor("Common Plate Chest", 1, Slot.BODY, ArmorType.PLATE, new HeroAttribute(1, 0, 0));
     }
 
     @Test
@@ -37,7 +41,7 @@ class WarriorTest {
 
     @Test
     public void testStartingLevelShouldBeOne() {
-        int expectedLevel =  1;
+        int expectedLevel = 1;
         int actualLevel = warrior.getLevel();
 
         assertEquals(expectedLevel, actualLevel);
@@ -45,7 +49,7 @@ class WarriorTest {
 
     @Test
     public void testStartingLevelShouldNotBeFive() {
-        int expectedLevel =  5;
+        int expectedLevel = 5;
         int actualLevel = warrior.getLevel();
 
         assertNotEquals(expectedLevel, actualLevel);
@@ -182,10 +186,76 @@ class WarriorTest {
 
     @Test
     void testCreateArmorAttributeShouldBePlate() {
-        HeroAttribute expectedAttribute = new HeroAttribute(1,0, 0);
+        HeroAttribute expectedAttribute = new HeroAttribute(1, 0, 0);
         HeroAttribute actualAttribute = armor.getArmorAttribute();
 
         assertEquals(expectedAttribute, actualAttribute);
     }
+
+    // A Hero should be able to equip a Weapon, the appropriate exceptions should be thrown if invalid (level requirement and type)
+    @Test
+    void testEquipWeaponDoesNotThrowsExceptions() {
+
+        assertDoesNotThrow(() -> warrior.equip(weapon));
+
+        assertEquals(weapon.getRequiredLevel(), warrior.getLevel());
+    }
+
+    @Test
+    void testEquipWeaponRequiredLevelThrowsExceptions() {
+        weaponInvalid = new Weapon("Common Axe", 3, WeaponType.AXE, 2);
+
+        Exception exception = assertThrows(InvalidWeaponException.class, () -> warrior.equip(weaponInvalid));
+
+        String expectedMessage = "This hero is not high enough level to equip " + weaponInvalid.getWeaponType();
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void testEquipWeaponTypeThrowsExceptions() {
+        weaponInvalid = new Weapon("Common Axe", 1, WeaponType.WAND, 2);
+
+        Exception exception = assertThrows(InvalidWeaponException.class, () -> warrior.equip(weaponInvalid));
+
+        String expectedMessage = "This hero cannot equip weapons of type " + weaponInvalid.getWeaponType();
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    // A Hero should be able to equip Armor, the appropriate exceptions should be thrown if invalid (level requirement and type)
+    @Test
+    void testEquipArmorDoesNotThrowsExceptions() {
+
+        assertDoesNotThrow(() -> warrior.equip(armor));
+
+        assertEquals(armor.getRequiredLevel(), warrior.getLevel());
+    }
+
+    @Test
+    void testEquipArmorTypeThrowsExceptions() {
+        armorInvalid = new Armor("Common Plate Chest", 1, Slot.BODY, ArmorType.CLOTH, new HeroAttribute(1, 0, 0));
+
+        Exception exception = assertThrows(InvalidArmorException.class, () -> warrior.equip(armorInvalid));
+
+        String expectedMessage = "This hero cannot equip armor of type " + armorInvalid.getArmorType();
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+    @Test
+    void testEquipArmorRequiredLevelThrowsExceptions() {
+        armorInvalid = new Armor("Common Plate Chest", 2, Slot.BODY, ArmorType.PLATE, new HeroAttribute(1, 0, 0));
+
+        Exception exception = assertThrows(InvalidArmorException.class, () -> warrior.equip(armorInvalid));
+
+        String expectedMessage = "This hero is not high enough level to equip this armor.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
 
 }
