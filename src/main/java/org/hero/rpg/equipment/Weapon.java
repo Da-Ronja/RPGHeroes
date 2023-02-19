@@ -19,13 +19,4 @@ public class Weapon extends Item {
         return weaponDamage;
     }
 
-    // TODO Remove
-    public void setWeaponType(WeaponType weaponType) {
-        this.weaponType = weaponType;
-    }
-
-    public void setWeaponDamage(int weaponDamage) {
-        this.weaponDamage = weaponDamage;
-    }
-
 }

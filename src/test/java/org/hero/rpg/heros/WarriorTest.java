@@ -101,12 +101,11 @@ class WarriorTest {
     }
 
     @Test
-    public void testAttributesIncreasedByCorrectAmountWhenLeveUpByFour() {
+    public void testAttributesIncreasedByCorrectAmountWhenLeveUpByFive() {
         HeroAttribute expectedAttributes = new HeroAttribute(17, 10, 5);
-        warrior.levelUp();
-        warrior.levelUp();
-        warrior.levelUp();
-        warrior.levelUp();
+        for (int i = 1; i < 5; i++) {
+            warrior.levelUp();
+        }
         HeroAttribute actualAttributes = warrior.calculateTotalAttributes();
 
         assertEquals(expectedAttributes, actualAttributes);
@@ -316,6 +315,7 @@ class WarriorTest {
 
         assertEquals(expectedDamage, actualDamage);
     }
+
     // Weapon equipped
     @Test
     void testCalculateDamageWeaponEquipped() throws InvalidWeaponException {
@@ -326,6 +326,7 @@ class WarriorTest {
 
         assertEquals(expectedDamage, actualDamage);
     }
+
     // Replaced weapon equipped (equip a weapon then equip a new weapon)
     @Test
     void testCalculateDamageReplacedWeaponEquipped() throws InvalidWeaponException {
@@ -338,6 +339,7 @@ class WarriorTest {
 
         assertEquals(expectedDamage, actualDamage);
     }
+
     // Weapon and armor equipped
     @Test
     void testCalculateDamageWeaponAndArmorEquipped() throws InvalidWeaponException, InvalidArmorException {
@@ -365,9 +367,9 @@ class WarriorTest {
                 Damage: 2.12
                 """;
 
-        String actualOutput =  warrior.display();
+        String actualOutput = warrior.display();
 
-        assertEquals(expectedOutput,actualOutput);
+        assertEquals(expectedOutput, actualOutput);
     }
 
 }

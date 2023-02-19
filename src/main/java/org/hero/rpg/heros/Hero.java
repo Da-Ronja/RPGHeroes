@@ -66,30 +66,12 @@ public abstract class Hero {
         return calculateTotalAttributes();
     }
 
-    @Override
-    public String toString() {
-        return "Hero: " + this.getClass().getSimpleName() + "{" +
-                "name= " + name + '\'' +
-                ", level= " + level +
-                ", levelAttributes=" + levelAttributes +
-                ", equipment=" + equipment +
-                ", validWeaponTypes=" + validWeaponTypes +
-                ", validArmorTypes=" + validArmorTypes +
-                '}';
-    }
-
     public String display() {
         HeroAttribute totalAttributes = calculateTotalAttributes();
         double totalDamage = calculateDamage();
         String className = this.getClass().getSimpleName();
 
-        return "Name: " + this.name + "\n" +
-                "Class: " + className + "\n" +
-                "Level: " + this.level + "\n" +
-                "Total strength: " + totalAttributes.getStrength() + "\n" +
-                "Total dexterity: " + totalAttributes.getDexterity() + "\n" +
-                "Total intelligence: " + totalAttributes.getIntelligence() + "\n" +
-                "Damage: " + totalDamage + "\n";
+        return "Name: " + this.name + "\n" + "Class: " + className + "\n" + "Level: " + this.level + "\n" + "Total strength: " + totalAttributes.getStrength() + "\n" + "Total dexterity: " + totalAttributes.getDexterity() + "\n" + "Total intelligence: " + totalAttributes.getIntelligence() + "\n" + "Damage: " + totalDamage + "\n";
     }
 
     protected abstract HeroAttribute getStartingLevelAttributes();
@@ -99,10 +81,7 @@ public abstract class Hero {
     protected abstract double calculateDamage();
 
     public HeroAttribute calculateTotalAttributes() {
-        HeroAttribute total = new HeroAttribute(levelAttributes.getStrength(),
-                levelAttributes.getDexterity(),
-                levelAttributes.getIntelligence()
-        );
+        HeroAttribute total = new HeroAttribute(levelAttributes.getStrength(), levelAttributes.getDexterity(), levelAttributes.getIntelligence());
 
         for (Item item : equipment.values()) {
             if (item instanceof Armor) {
@@ -120,6 +99,11 @@ public abstract class Hero {
         equipment.put(Slot.BODY, null);
         equipment.put(Slot.LEGS, null);
         return equipment;
+    }
+
+    @Override
+    public String toString() {
+        return "Hero: " + this.getClass().getSimpleName() + "{" + "name= " + name + '\'' + ", level= " + level + ", levelAttributes=" + levelAttributes + ", equipment=" + equipment + ", validWeaponTypes=" + validWeaponTypes + ", validArmorTypes=" + validArmorTypes + '}';
     }
 
 }

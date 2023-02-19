@@ -2,9 +2,9 @@ package org.hero.rpg.heros;
 
 public class HeroAttribute {
 
-    private int strength;       // physical strength of the character.
-    private int dexterity;      // characters ability to attack with speed and nimbleness.
-    private int intelligence;   // determines the characters affinity with magic.
+    private final int strength;       // physical strength of the character.
+    private final int dexterity;      // characters ability to attack with speed and nimbleness.
+    private final int intelligence;   // determines the characters affinity with magic.
 
     public HeroAttribute(int strength, int dexterity, int intelligence) {
         this.strength = strength;
@@ -21,11 +21,7 @@ public class HeroAttribute {
 
     @Override
     public String toString() {
-        return "HeroAttribute{" +
-                "strength=" + strength +
-                ", dexterity=" + dexterity +
-                ", intelligence=" + intelligence +
-                '}';
+        return "HeroAttribute{" + "strength=" + strength + ", dexterity=" + dexterity + ", intelligence=" + intelligence + '}';
     }
 
     public int getStrength() {
@@ -41,16 +37,13 @@ public class HeroAttribute {
     }
 
     @Override
-    public boolean equals(Object obj) { // TODO Remove
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof HeroAttribute)) {
+        if (!(obj instanceof HeroAttribute other)) {
             return false;
         }
-        HeroAttribute other = (HeroAttribute) obj;
-        return this.strength == other.strength &&
-                this.dexterity == other.dexterity &&
-                this.intelligence == other.intelligence;
+        return this.strength == other.strength && this.dexterity == other.dexterity && this.intelligence == other.intelligence;
     }
 }
