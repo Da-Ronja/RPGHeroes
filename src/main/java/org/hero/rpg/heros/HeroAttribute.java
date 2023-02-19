@@ -21,7 +21,11 @@ public class HeroAttribute {
 
     @Override
     public String toString() {
-        return "HeroAttribute{" + "strength=" + strength + ", dexterity=" + dexterity + ", intelligence=" + intelligence + '}';
+        return "HeroAttribute{" +
+                "strength=" + strength +
+                ", dexterity=" + dexterity +
+                ", intelligence=" + intelligence +
+                '}';
     }
 
     public int getStrength() {
@@ -44,6 +48,8 @@ public class HeroAttribute {
         if (!(obj instanceof HeroAttribute other)) {
             return false;
         }
-        return this.strength == other.strength && this.dexterity == other.dexterity && this.intelligence == other.intelligence;
+        return this.strength == other.strength &&
+                this.dexterity == other.dexterity &&
+                this.intelligence == other.intelligence;
     }
 }

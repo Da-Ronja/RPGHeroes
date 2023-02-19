@@ -20,7 +20,9 @@ class RangerTest {
     public void setUp() {
         ranger = new Ranger("Ranger Tom");
         weapon = new Weapon("Common Bow", 1, WeaponType.BOW, 2);
-        armor = new Armor("Common Leather Chest", 1, Slot.BODY, ArmorType.LEATHER, new HeroAttribute(1, 0, 0));
+        armor = new Armor("Common Leather Chest",
+                1, Slot.BODY,
+                ArmorType.LEATHER, new HeroAttribute(1, 0, 0));
     }
 
     @Test
@@ -38,7 +40,6 @@ class RangerTest {
 
         assertNotEquals(expectedName, actualName);
     }
-
 
     @Test
     public void testStartingLevelShouldBeOne() {
@@ -350,8 +351,6 @@ class RangerTest {
 
         double expectedDamage = 2.14;
         double actualDamage = ranger.calculateDamage();
-
-        System.out.println(ranger.display());
 
         assertEquals(expectedDamage, actualDamage);
     }
