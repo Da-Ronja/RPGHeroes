@@ -3,57 +3,105 @@ package org.hero.rpg.heros;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class MageTest {
 
     private Hero mage;
 
-    @BeforeEach
+    @BeforeEach // Same
     public void setUp() {
         mage = new Mage("TinTin");
     }
 
-    //  When a Hero is created, it needs to have the correct name, level, and attributes.
-    @Test
-    void TestCreateMage_Name_ShouldPass() {
+    @Test // Same but maybe not done Should it test items Null?
+    public void testInitializationNewMage() {
         assertEquals("TinTin", mage.getName());
-    }
-
-    @Test
-    public void testStartingLevelAttributes() {
+        assertEquals(1, mage.getLevel());
         assertEquals(new HeroAttribute(1, 1, 8), mage.totalAttributes());
     }
 
     @Test
-    public void testCalculateTotalAttributes() {
-        HeroAttribute expectedAttributes = new HeroAttribute(1, 1, 8);
-        HeroAttribute totalAttributes = mage.calculateTotalAttributes();
-        assertEquals(expectedAttributes, totalAttributes);
+        // Same
+    void createMageNameShouldBeTinTin() {
+        String expectedName = "TinTin";
+        String actualName = mage.getName();
+
+        assertEquals(expectedName, actualName);
     }
 
     @Test
+        // Same
+    void createMageNameShouldNotBeFluffy() {
+        String expectedName = "Fluffy";
+        String actualName = mage.getName();
+
+        assertNotEquals(expectedName, actualName);
+    }
+
+    @Test // Same
     public void testStartingLevelShouldBeOne() {
-        assertEquals(1, mage.getLevel());
+        int expectedLevel = 1;
+        int actualLevel = mage.getLevel();
+
+        assertEquals(expectedLevel, actualLevel);
     }
 
-    @Test
-    public void testInitialization() {
-        assertEquals("TinTin", mage.getName());
-        assertEquals(1, mage.getLevel());
-        assertEquals(new HeroAttribute(1, 1, 8), mage.totalAttributes());
+    @Test // Same
+    public void testStartingLevelShouldNotBeFive() {
+        int expectedLevel = 5;
+        int actualLevel = mage.getLevel();
+
+        assertNotEquals(expectedLevel, actualLevel);
     }
 
+    @Test // Same
+    public void testStartingLevelAttributesShouldBe118() {
+        HeroAttribute expectedAttributes = new HeroAttribute(1, 1, 8);
+        HeroAttribute actualAttributes = mage.getStartingLevelAttributes();
 
-    // When a Heroes level is increased, it needs to increment by the correct amount and result in the correct
-    //attributes.
-    //o Creation and leveling tests need to be written for each sub class
-    //o A test to see if HeroAttribute is being added/increased correctly should also be written
-    @Test
+        assertEquals(expectedAttributes, actualAttributes);
+    }
+
+    @Test // Same
+    public void testStartingLevelAttributesShouldNotBe118() {
+        HeroAttribute expectedAttributes = new HeroAttribute(1, 2, 8);
+        HeroAttribute actualAttributes = mage.getStartingLevelAttributes();
+
+        assertNotEquals(expectedAttributes, actualAttributes);
+    }
+
+    @Test // Same
     public void testLevelUp() {
+        int expectedLevel = 2;
+        HeroAttribute expectedAttributes = new HeroAttribute(2, 2, 13);
+
         mage.levelUp();
-        assertEquals(2, mage.getLevel());
-        assertEquals(new HeroAttribute(2, 2, 13), mage.totalAttributes());
+
+        int actualLevel = mage.getLevel();
+        HeroAttribute actualAttributes = mage.totalAttributes();
+
+        assertEquals(expectedLevel, actualLevel);
+        assertEquals(expectedAttributes, actualAttributes);
+    }
+
+    @Test // Same
+    public void testLevelIncreasedByOneWithLeveUp() {
+        int expectedLevel = 2;
+        mage.levelUp();
+        int actualLevel = mage.getLevel();
+
+        assertEquals(expectedLevel, actualLevel);
+    }
+
+    @Test // Same
+    public void testAttributesIncreasedByCorrectAmount() {
+        HeroAttribute expectedAttributes = new HeroAttribute(2, 2, 13);
+        mage.levelUp();
+        HeroAttribute actualAttributes = mage.calculateTotalAttributes();
+
+        assertEquals(expectedAttributes, actualAttributes);
     }
 
 }
